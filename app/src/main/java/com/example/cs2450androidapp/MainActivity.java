@@ -18,15 +18,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /**
-         * Count Down 3 seconds then change over to the game.
-         */
-        new CountDownTimer(3000,1000)
+        // Count Down 3 seconds then change over to the game.
+        int duration = 4000;
+        new CountDownTimer(duration,1000)
         {
             @Override
-            public void onTick(long l) {
-
-            }
+            public void onTick(long l) { }
 
             @Override
             public void onFinish() {
@@ -35,4 +32,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
     }
-}
+}//end Class
