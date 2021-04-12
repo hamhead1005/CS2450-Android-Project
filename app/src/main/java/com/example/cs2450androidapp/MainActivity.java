@@ -12,11 +12,16 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
+    static MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        player = MediaPlayer.create(this, R.raw.music);
+        player.setLooping(true);
+        player.start();
 
         // Count Down 3 seconds then change over to the game.
         int duration = 4000;
@@ -31,5 +36,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }.start();
+    }
+
+    public static void pausePlayer()
+    {
+        player.pause();
+    }
+
+    public static void continuePlayer(){
+        player.start();
     }
 }//end Class
