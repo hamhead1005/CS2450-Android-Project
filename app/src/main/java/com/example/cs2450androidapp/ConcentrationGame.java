@@ -2,8 +2,15 @@ package com.example.cs2450androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 
 public class ConcentrationGame extends AppCompatActivity {
 

@@ -4,4 +4,7 @@
     <string name="team">Team Red Tigers</string>
     <string name="Welcome">Welcome to the Concentration Game!</string>
     <string name="Music">Background Music (Off)</string>
+    <string name="End">End Game</string>
+    <string name="New">New Game</string>
+    <string name="Try_again">Try Again</string>
 </resources>
