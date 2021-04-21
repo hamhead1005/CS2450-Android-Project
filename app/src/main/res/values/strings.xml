@@ -7,4 +7,7 @@
     <string name="End">End Game</string>
     <string name="New">New Game</string>
     <string name="Try_again">Try Again</string>
+    <string name="TeamLogo">Team Red Tigers Logo</string>
+    <string name="StartGame">Start New Game</string>
+    <string name="GameSizeSelection">Select the number of Cards you would like?</string>
 </resources>

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent = new Intent(MainActivity.this, ConcentrationGame.class);
+                Intent intent = new Intent(MainActivity.this, MainMenu.class);
                 startActivity(intent);
             }
         }.start();
