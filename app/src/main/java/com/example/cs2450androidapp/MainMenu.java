@@ -13,12 +13,25 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 
 public class MainMenu extends AppCompatActivity {
-    private static int gameSize;
+    private String gameSize;
+    private boolean audioSwitch = false; //T = checked
 
-    public static int getGameSize()
-    {
-        return gameSize;
-    }
+    @Override
+    public void onActivityResult(int requestCode,int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1)
+        {
+            if(resultCode == RESULT_OK)
+            {
+                SwitchCompat switchCompat = findViewById(R.id.musicSwitchMenu);
+                boolean switchStatus = data.getBooleanExtra("AUDIO_SWITCH_C", true);
+                if (switchStatus) {
+                    switchCompat.setChecked(true);
+                }
+            }
+        }
+    }//end OnActivityResult
 
     @Override
     public void onBackPressed() {
@@ -30,6 +43,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        //For DropDown Menu
         String [] options = {"4","6","8","10","12","14","16","18","20"};
         Spinner dropdown = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, options);
@@ -41,11 +55,12 @@ public class MainMenu extends AppCompatActivity {
         startbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String test = String.valueOf(dropdown.getSelectedItem());
-                gameSize = Integer.parseInt(test);
+                gameSize = String.valueOf(dropdown.getSelectedItem());
 
-                Intent intent = new Intent(MainMenu.this, ConcentrationGame.class);
-                startActivity(intent);
+                Intent i = new Intent(MainMenu.this, ConcentrationGame.class);
+                i.putExtra("GAME_SIZE", gameSize);
+                i.putExtra("AUDIO_SWITCH", audioSwitch);
+                startActivityForResult(i,1);
             }
         });
 
@@ -55,9 +70,11 @@ public class MainMenu extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (switchCompat.isChecked())
                 {
+                    audioSwitch = true;
                     MainActivity.pausePlayer();
                 }
                 else if(!switchCompat.isChecked()){
+                    audioSwitch = false;
                     MainActivity.continuePlayer();
                 }
             }
