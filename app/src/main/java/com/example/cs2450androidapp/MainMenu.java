@@ -2,6 +2,7 @@ package com.example.cs2450androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +17,10 @@ public class MainMenu extends AppCompatActivity {
     private String gameSize;
     private boolean audioSwitch = false; //T = checked
 
+    //Used for passing music switch status from Concentration Game
     @Override
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
 
         if(requestCode == 1)
         {
@@ -27,9 +28,7 @@ public class MainMenu extends AppCompatActivity {
             {
                 SwitchCompat switchCompat = findViewById(R.id.musicSwitchMenu);
                 boolean switchStatus = data.getBooleanExtra("AUDIO_SWITCH_C", true);
-                if (switchStatus) {
-                    switchCompat.setChecked(true);
-                }
+                switchCompat.setChecked(switchStatus);
             }
         }
     }//end OnActivityResult
@@ -47,10 +46,10 @@ public class MainMenu extends AppCompatActivity {
         //For DropDown Menu
         String [] options = {"4","6","8","10","12","14","16","18","20"};
         Spinner dropdown = findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, options);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, options);
         dropdown.setAdapter(adapter);
 
-        //Start New Game
+        //Start New Game Button
         SwitchCompat switchCompat = findViewById(R.id.musicSwitchMenu);
         Button startbutton = (Button) findViewById(R.id.startButton);
         startbutton.setOnClickListener(new View.OnClickListener() {

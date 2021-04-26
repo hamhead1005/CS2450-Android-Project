@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         player.setLooping(true);
         player.start();
 
-        // Count Down 3 seconds then change over to the game.
+        // Count Down 4 seconds then change over to the game.
         int duration = 4000;
         new CountDownTimer(duration,1000)
         {

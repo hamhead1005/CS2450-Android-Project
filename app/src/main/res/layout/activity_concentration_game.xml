@@ -10,11 +10,11 @@
 
     <Button
         android:id="@+id/NewGameButton"
-        android:layout_width="106dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/New"
         android:textAllCaps="true"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,12 +26,12 @@
 
     <Button
         android:id="@+id/endButton"
-        android:layout_width="106dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="@string/End"
         android:textAllCaps="true"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,11 +42,11 @@
 
     <Button
         android:id="@+id/TryAgainButton"
-        android:layout_width="106dp"
-        android:layout_height="43dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/Try_again"
         android:textAllCaps="true"
-        android:textSize="11sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toTopOf="@+id/endButton"
@@ -62,7 +62,7 @@
         android:layout_height="34dp"
         android:gravity="center"
         android:text="@string/Music"
-        android:textSize="10sp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -70,12 +70,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/testTextVie"
+    <GridLayout
+        android:id="@+id/CardGrid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="85dp"
-        tools:layout_editor_absoluteY="147dp" />
+        android:background="@android:color/transparent"
+        android:columnCount="4"
+        android:rowCount="5"
+        android:orientation="horizontal"
+        android:useDefaultMargins="true"
+        app:layout_constraintBottom_toTopOf="@id/TryAgainButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/musicSwitch">
+
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
