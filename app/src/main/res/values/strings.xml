@@ -10,4 +10,5 @@
     <string name="TeamLogo">Team Red Tigers Logo</string>
     <string name="StartGame">Start New Game</string>
     <string name="GameSizeSelection">Select the number of Cards you would like?</string>
+    <string name="CheckAnswer">Check Answers</string>
 </resources>

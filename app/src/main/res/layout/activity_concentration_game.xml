@@ -86,4 +86,15 @@
 
     </GridLayout>
 
+    <Button
+        android:id="@+id/CheckAnswerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginRight="4dp"
+        android:text="@string/CheckAnswer"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/NewGameButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
