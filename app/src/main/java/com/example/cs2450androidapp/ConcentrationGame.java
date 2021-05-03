@@ -28,6 +28,11 @@ public class ConcentrationGame extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // Do nothing. Disables Back button on this page.
+    }//end OnBackPressed
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concentration_game);
