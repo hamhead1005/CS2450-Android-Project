@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CS2450AndroidApp">
         <activity android:name=".MainMenu"></activity>
-        <activity android:name=".ConcentrationGame" />
+        <activity android:name=".ConcentrationGame"
+           android:parentActivityName=".MainMenu" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

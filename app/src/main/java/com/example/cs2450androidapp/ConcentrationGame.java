@@ -32,6 +32,9 @@ public class ConcentrationGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concentration_game);
 
+        // Adds back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //Setup Switch Status
         Bundle extras = getIntent().getExtras();
         SwitchCompat musicSwitch = findViewById(R.id.musicSwitch);

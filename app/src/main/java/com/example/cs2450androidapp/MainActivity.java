@@ -18,10 +18,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         player = MediaPlayer.create(this, R.raw.music);
         player.setLooping(true);
         player.start();
+
 
         // Count Down 4 seconds then change over to the game.
         int duration = 4000;
@@ -36,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         }.start();
+
     }
+
 
     public static void pausePlayer()
     {
@@ -45,5 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static void continuePlayer(){
         player.start();
+
     }
 }//end Class
