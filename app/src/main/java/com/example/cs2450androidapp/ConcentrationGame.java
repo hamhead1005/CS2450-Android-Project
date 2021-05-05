@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ConcentrationGame extends AppCompatActivity {
     private static int buttonsClicked = 0;
-    private int buttonCount = 0;
+    private static int buttonCount = 0;
     GridLayout simpleGrid;
     String [] finalWords;
     public Card [] board;
@@ -75,6 +75,28 @@ public class ConcentrationGame extends AppCompatActivity {
             }
         });
 
+        // End Game Button
+        Button endGame = findViewById(R.id.endButton);
+        endGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                boolean audioSwitchStatus = musicSwitch.isChecked();
+                intent.putExtra("AUDIO_SWITCH_C", audioSwitchStatus);
+                setResult(RESULT_OK,intent);
+                flipAllCards();
+                buttonCount = 3;
+                buttonsClicked = 0;
+                Button checkButton = findViewById(R.id.CheckAnswerButton);
+                Button tryButton = findViewById(R.id.TryAgainButton);
+                endGame.setEnabled(false);
+                tryButton.setEnabled(false);
+                checkButton.setEnabled(false);
+                Toast.makeText(ConcentrationGame.this,"Game Is Over.", Toast.LENGTH_LONG).show();
+               // finish();
+            }
+        });
+
         //Get the Game Size and String Array
         String gameSize = extras.getString("GAME_SIZE");
         buttonCount = Integer.parseInt(gameSize);
@@ -115,7 +137,7 @@ public class ConcentrationGame extends AppCompatActivity {
                 for(int i = 0; i < buttonCount; i++) {
                     if(board[i].getClicked()){
                         if(!matchFound(board[i])){
-                            flipAllCards();
+                            filpIncorrectCards();
                         }
                     }
                 }//end for
@@ -242,4 +264,6 @@ public class ConcentrationGame extends AppCompatActivity {
     public static int getClickCount() {
         return  buttonsClicked;
     }//end getClickCount()
+    public  static int getButtonCount(){return buttonCount;} //end getButtonCount()
+
 }//End Class
