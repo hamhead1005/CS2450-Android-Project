@@ -100,22 +100,24 @@ public class ConcentrationGame extends AppCompatActivity {
             public void onClick(View view) {
                 buttonsClicked = 0;
 
-                flipAllCards();
+                filpIncorrectCards();
             }
         });
 
-
+        
         //Check Answers Button
         Button checkButton = findViewById(R.id.CheckAnswerButton);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonsClicked = 0;
-
                 for(int i = 0; i < buttonCount; i++) {
                     if(board[i].getClicked()){
                         if(!matchFound(board[i])){
-                            flipAllCards();
+                            Toast toast = Toast.makeText(ConcentrationGame.this, "Wrong Answer Try Again!", Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                        else{
+                            buttonsClicked = 0; //Allow them to continue the game
                         }
                     }
                 }//end for
@@ -124,6 +126,17 @@ public class ConcentrationGame extends AppCompatActivity {
                     Toast toast = Toast.makeText(ConcentrationGame.this, "You Won!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+            }
+        });
+
+        //end Game Button
+        Button endGameButton = findViewById(R.id.endButton);
+        endGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAndDisableAllCards();
+                checkButton.setEnabled(false);
+                tryButton.setEnabled(false);
             }
         });
     }//end OnCreate
@@ -157,11 +170,12 @@ public class ConcentrationGame extends AppCompatActivity {
     }//end gameWon
 
     /**
-     * Used to flip all Cards
+     * Used to show the answers and disable clicking
      */
-    private void flipAllCards() {
+    private void showAndDisableAllCards() {
         for(int i = 0; i < buttonCount; i++){
-            board[i].flip();
+            board[i].show();
+            buttonsClicked = 3;
         }
     }//end flipAllCards
 

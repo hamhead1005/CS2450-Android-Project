@@ -48,7 +48,6 @@
         android:textAllCaps="true"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toTopOf="@+id/endButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.032"
@@ -94,6 +93,7 @@
         android:layout_marginRight="4dp"
         android:text="@string/CheckAnswer"
         android:textSize="12sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/NewGameButton"
         app:layout_constraintEnd_toEndOf="parent" />
 

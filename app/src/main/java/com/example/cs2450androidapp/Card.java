@@ -56,6 +56,13 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
         setBackgroundColor(Color.YELLOW);
     }//end flip method
 
+    public void show(){
+        clickedState = false;
+
+        setText(assignedWord);
+        setBackgroundColor(Color.WHITE);
+    }//end flip method
+
     public void setAssignedWord(String word) {
         assignedWord = word;
     }//end setAssignedWord
