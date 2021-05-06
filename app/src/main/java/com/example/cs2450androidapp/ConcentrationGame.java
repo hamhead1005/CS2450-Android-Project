@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ConcentrationGame extends AppCompatActivity {
     private static int buttonsClicked = 0;
-    private int buttonCount = 0;
+    private static int buttonCount = 0;
     GridLayout simpleGrid;
     String [] finalWords;
     public Card [] board;
@@ -75,6 +75,28 @@ public class ConcentrationGame extends AppCompatActivity {
             }
         });
 
+        // End Game Button
+        Button endGame = findViewById(R.id.endButton);
+        endGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                boolean audioSwitchStatus = musicSwitch.isChecked();
+                intent.putExtra("AUDIO_SWITCH_C", audioSwitchStatus);
+                setResult(RESULT_OK,intent);
+                flipAllCards();
+                buttonCount = 3;
+                buttonsClicked = 0;
+                Button checkButton = findViewById(R.id.CheckAnswerButton);
+                Button tryButton = findViewById(R.id.TryAgainButton);
+                endGame.setEnabled(false);
+                tryButton.setEnabled(false);
+                checkButton.setEnabled(false);
+                Toast.makeText(ConcentrationGame.this,"Game Is Over.", Toast.LENGTH_LONG).show();
+               // finish();
+            }
+        });
+
         //Get the Game Size and String Array
         String gameSize = extras.getString("GAME_SIZE");
         buttonCount = Integer.parseInt(gameSize);
@@ -100,24 +122,22 @@ public class ConcentrationGame extends AppCompatActivity {
             public void onClick(View view) {
                 buttonsClicked = 0;
 
-                filpIncorrectCards();
+                flipAllCards();
             }
         });
 
-        
+
         //Check Answers Button
         Button checkButton = findViewById(R.id.CheckAnswerButton);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                buttonsClicked = 0;
+
                 for(int i = 0; i < buttonCount; i++) {
                     if(board[i].getClicked()){
                         if(!matchFound(board[i])){
-                            Toast toast = Toast.makeText(ConcentrationGame.this, "Wrong Answer Try Again!", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        else{
-                            buttonsClicked = 0; //Allow them to continue the game
+                            filpIncorrectCards();
                         }
                     }
                 }//end for
@@ -126,17 +146,6 @@ public class ConcentrationGame extends AppCompatActivity {
                     Toast toast = Toast.makeText(ConcentrationGame.this, "You Won!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-            }
-        });
-
-        //end Game Button
-        Button endGameButton = findViewById(R.id.endButton);
-        endGameButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAndDisableAllCards();
-                checkButton.setEnabled(false);
-                tryButton.setEnabled(false);
             }
         });
     }//end OnCreate
@@ -170,12 +179,11 @@ public class ConcentrationGame extends AppCompatActivity {
     }//end gameWon
 
     /**
-     * Used to show the answers and disable clicking
+     * Used to flip all Cards
      */
-    private void showAndDisableAllCards() {
+    private void flipAllCards() {
         for(int i = 0; i < buttonCount; i++){
-            board[i].show();
-            buttonsClicked = 3;
+            board[i].flip();
         }
     }//end flipAllCards
 
@@ -256,4 +264,6 @@ public class ConcentrationGame extends AppCompatActivity {
     public static int getClickCount() {
         return  buttonsClicked;
     }//end getClickCount()
+    public  static int getButtonCount(){return buttonCount;} //end getButtonCount()
+
 }//End Class

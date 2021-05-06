@@ -28,6 +28,10 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
                     Toast toast = Toast.makeText(getContext(), "Click the Check Answers button first!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+                else if(ConcentrationGame.getButtonCount() == 3){
+                    Toast toast = Toast.makeText(getContext(), "The Game Is Over.", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
                 else {
                     clickedState = true;
                     setText(assignedWord);
