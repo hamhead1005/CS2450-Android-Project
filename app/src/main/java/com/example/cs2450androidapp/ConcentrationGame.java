@@ -8,18 +8,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ConcentrationGame extends AppCompatActivity {
+public class ConcentrationGame<TotalScore> extends AppCompatActivity {
     private static int buttonsClicked = 0;
     private int buttonCount = 0;
     GridLayout simpleGrid;
     String [] finalWords;
     public Card [] board;
+    TextView totalPoints;
+    double score = 0;
+
+
 
     @Override
     public void onPause() {
@@ -36,6 +41,11 @@ public class ConcentrationGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concentration_game);
+
+        // Adds Score TextView
+        totalPoints = (TextView) findViewById(R.id.TotalScore);
+        totalPoints.setText("Score: " + score);
+
 
         // Adds back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -112,11 +122,18 @@ public class ConcentrationGame extends AppCompatActivity {
             public void onClick(View view) {
                 for(int i = 0; i < buttonCount; i++) {
                     if(board[i].getClicked()){
-                        if(!matchFound(board[i])){
+                        if(!matchFound(board[i])) {
+                            subtractPoints();
                             Toast toast = Toast.makeText(ConcentrationGame.this, "Wrong Answer Try Again!", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                         else{
+                            if (board[i].getmatchCounted()==false)                                  //checks to see if variable match counted is false if so adds points then sets variable true
+                            {
+                                addPoints();
+                                board[i].setmatchCountedTrue();                                         //only adds points if the match counted variable is false
+
+                            }
                             buttonsClicked = 0; //Allow them to continue the game
                         }
                     }
@@ -125,6 +142,8 @@ public class ConcentrationGame extends AppCompatActivity {
                 if(gameWon()){
                     Toast toast = Toast.makeText(ConcentrationGame.this, "You Won!", Toast.LENGTH_SHORT);
                     toast.show();
+
+
                 }
             }
         });
@@ -140,6 +159,25 @@ public class ConcentrationGame extends AppCompatActivity {
             }
         });
     }//end OnCreate
+
+    //method for keeping score
+    //addition of points
+    public void addPoints() {
+        score+=1;                                                                                   //adds 2 to score if match is correct
+        totalPoints.setText("Score: " + score);                                                     //updates textView totalPoints
+    }
+
+    //subtraction of points
+    public void subtractPoints(){
+        if (score==0){                                                                              //checks if score = 0 if so stays at zero
+            totalPoints.setText("Score: " + score);                                                 //updates textView totalPoints
+        }else{
+            score-=0.5;                                                                             //else it will subtract 1 from total score
+            if (score<0)                                                                            //if score were to reach below zero, sets score to 0
+                score=0;
+            totalPoints.setText("Score: " + score);                                                 //updates textView totalPoints
+        }
+    }
 
 
     /*                              *

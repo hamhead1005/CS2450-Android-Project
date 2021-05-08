@@ -15,6 +15,8 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
     private String assignedWord;
     private boolean clickedState = false;
     private boolean beenChecked = false; //Used to mark correct tiles
+    private boolean matchCounted = false;                                                           //used to keep track of which matches have been counted towards the score
+
 
     public Card(Context context) {
         super(context);
@@ -82,5 +84,13 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
 
     public String getWord() {
         return assignedWord;
+    }
+
+    public boolean getmatchCounted(){
+        return matchCounted;
+    }
+
+    public void setmatchCountedTrue(){
+        this.matchCounted = true;
     }
 }
