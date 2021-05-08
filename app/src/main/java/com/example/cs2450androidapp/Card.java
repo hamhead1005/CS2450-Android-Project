@@ -13,15 +13,17 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
     private static int cardWidth = 180;
     private static int cardHeight = 260;
     private String assignedWord;
-    private boolean clickedState = false;
-    private boolean beenChecked = false; //Used to mark correct tiles
-    private boolean matchCounted = false;                                                           //used to keep track of which matches have been counted towards the score
-
+    private boolean clickedState = false; //Used to check if a button has been clicked
+    private boolean markedCorrect = false; //Used to mark correct tiles
+    private boolean previouslyChecked = false; //Used as a part of the Scoring System
 
     public Card(Context context) {
         super(context);
     }//end Constructor
 
+    /**
+     * Used for when button has been clicked on.
+     */
     public void setOnClickListener() {
         this.setOnClickListener(new OnClickListener() {
             @Override
@@ -30,7 +32,7 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
                     Toast toast = Toast.makeText(getContext(), "Click the Check Answers button first!", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                else {
+                else if(ConcentrationGame.getClickCount() < 2){ //Only flip if number of clicked tiles is less than 2
                     clickedState = true;
                     setText(assignedWord);
                     setBackgroundColor(Color.WHITE);
@@ -40,6 +42,9 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
         });
     }//End Click Event Listener
 
+    /**
+     * Used in intialization process to set Properties of Cards
+     */
     public void setProperties() {
         setBackgroundColor(Color.YELLOW);
         setWidth(cardWidth);
@@ -51,13 +56,19 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
         setOnClickListener();
     }//end setProperties
 
+    /**
+     * Used to flip back to its blank un clicked state
+     */
     public void flip(){
         clickedState = false;
-        beenChecked = false;
+        markedCorrect = false;
         setText("");
         setBackgroundColor(Color.YELLOW);
     }//end flip method
 
+    /**
+     * Used when end game button is pressed to show all cards with their assigned words
+     */
     public void show(){
         clickedState = false;
 
@@ -65,32 +76,53 @@ public class Card extends androidx.appcompat.widget.AppCompatTextView {
         setBackgroundColor(Color.WHITE);
     }//end flip method
 
+    /**
+     * Used during initilization to set the assigned word for each card.
+     * @param word
+     */
     public void setAssignedWord(String word) {
         assignedWord = word;
     }//end setAssignedWord
 
-    //Button has been clicked but not checked
+    /**
+     * Button has been clicked but not checked yet
+     * @return true if clicked, False if not
+     */
     public boolean getClicked() {
         return clickedState;
     }
 
-    public boolean beenChecked() {
-        return beenChecked;
+    /**
+     * Card has been marked correct
+     * @return true if marked carrect
+     */
+    public boolean getMarkedCorrect() {
+        return markedCorrect;
     }
 
-    public void setBeenChecked(){
-        this.beenChecked = true;
+    /**
+     * Marked as correct
+     */
+    public void setMarkedCorrect(){
+        this.markedCorrect = true;
     }
 
+    /**
+     *
+     * @return assigned Word
+     */
     public String getWord() {
         return assignedWord;
     }
 
-    public boolean getmatchCounted(){
-        return matchCounted;
+    /**
+     * Used for scoring system
+     */
+    public void setPreviouslyChecked() {
+        previouslyChecked = true;
     }
 
-    public void setmatchCountedTrue(){
-        this.matchCounted = true;
+    public boolean getPreviouslyChecked(){
+        return previouslyChecked;
     }
 }

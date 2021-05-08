@@ -22,15 +22,13 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
     String [] finalWords;
     public Card [] board;
     TextView totalPoints;
-    double score = 0;
-
-
+    int score = 0; //Game Score
 
     @Override
     public void onPause() {
         super.onPause();
-        buttonsClicked = 0; //reset button clicked counter
-    }
+        buttonsClicked = 0; //reset buttons clicked counter when we leave the Game screen.
+    }//end OnPause
 
     @Override
     public void onBackPressed() {
@@ -46,11 +44,10 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
         totalPoints = (TextView) findViewById(R.id.TotalScore);
         totalPoints.setText("Score: " + score);
 
-
         // Adds back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Setup Switch Status
+        //Copy status of Music Switch from menu page to music switcher on Game page
         Bundle extras = getIntent().getExtras();
         SwitchCompat musicSwitch = findViewById(R.id.musicSwitch);
         boolean switchStatus = extras.getBoolean("AUDIO_SWITCH");
@@ -85,13 +82,18 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
             }
         });
 
+        /*
+          Initialize the Cards in the board based on menu selection
+         */
+
         //Get the Game Size and String Array
         String gameSize = extras.getString("GAME_SIZE");
-        buttonCount = Integer.parseInt(gameSize);
-        finalWords = getFinalWords(buttonCount);
-        board = new Card[buttonCount]; //Intiallize size of the Card array
+        buttonCount = Integer.parseInt(gameSize); //How many buttons were selected from the Drop down on the menu screen
+        finalWords = getFinalWords(buttonCount);  //List of assigned words
+        board = new Card[buttonCount]; //Initialize size of the Card array
 
         //Create Board
+        //Grid Layout from activity_concentration_game.xml
         simpleGrid = (GridLayout) findViewById(R.id.CardGrid);
         for(int i = 0; i < buttonCount; i++){
             Card c = new Card(this);
@@ -102,15 +104,20 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
             board[i] = c;
         }//end for
 
+        /*
+          Initialize the Cards in the board based on menu selection
+         */
 
         //Try Again Button
         Button tryButton = findViewById(R.id.TryAgainButton);
         tryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                buttonsClicked = 0;
-
-                filpIncorrectCards();
+                //Dont allow user to click try-again if 2 cards have been flipped
+                if(buttonsClicked != 2){
+                    filpIncorrectCards();
+                    buttonsClicked = 0;
+                }
             }
         });
 
@@ -120,31 +127,37 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Boolean pointAdder = false;
+
                 for(int i = 0; i < buttonCount; i++) {
                     if(board[i].getClicked()){
-                        if(!matchFound(board[i])) {
-                            subtractPoints();
-                            Toast toast = Toast.makeText(ConcentrationGame.this, "Wrong Answer Try Again!", Toast.LENGTH_SHORT);
-                            toast.show();
+                        if(matchFound(board[i])) {
+                            if(!board[i].getPreviouslyChecked()){
+                                pointAdder = true;
+                            }
+                            board[i].setPreviouslyChecked();
                         }
                         else{
-                            if (board[i].getmatchCounted()==false)                                  //checks to see if variable match counted is false if so adds points then sets variable true
-                            {
-                                addPoints();
-                                board[i].setmatchCountedTrue();                                         //only adds points if the match counted variable is false
-
-                            }
-                            buttonsClicked = 0; //Allow them to continue the game
+                            Toast toast = Toast.makeText(ConcentrationGame.this, "Wrong Answer Try Again!", Toast.LENGTH_SHORT);
+                            toast.show();
                         }
                     }
                 }//end for
 
+                if(pointAdder){
+                    addPoints();
+                    addPoints();
+                    buttonsClicked  = 0;
+                }//end Add Points
+                else {
+                    subtractPoints();
+                    buttonsClicked = 3; //Click try again to start clicking
+                }// end Subtract Points
+
                 if(gameWon()){
                     Toast toast = Toast.makeText(ConcentrationGame.this, "You Won!", Toast.LENGTH_SHORT);
                     toast.show();
-
-
-                }
+                }//end Game Won
             }
         });
 
@@ -156,9 +169,16 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
                 showAndDisableAllCards();
                 checkButton.setEnabled(false);
                 tryButton.setEnabled(false);
+                score = 0;
+                totalPoints.setText("Score: " + score);
             }
         });
     }//end OnCreate
+
+    /*                              *
+       Methods outside of On Create *
+                                    *
+     */
 
     //method for keeping score
     //addition of points
@@ -172,35 +192,35 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
         if (score==0){                                                                              //checks if score = 0 if so stays at zero
             totalPoints.setText("Score: " + score);                                                 //updates textView totalPoints
         }else{
-            score-=0.5;                                                                             //else it will subtract 1 from total score
+            score-=1;                                                                               //else it will subtract 1 from total score
             if (score<0)                                                                            //if score were to reach below zero, sets score to 0
                 score=0;
             totalPoints.setText("Score: " + score);                                                 //updates textView totalPoints
         }
     }
 
-
-    /*                              *
-       Methods outside of On Create *
-                                    *
-     */
-
     /**
      *  Checks to see if the player matched all the cards
-     *
-     * @return true if game won. Triggers message
+     *  Disable all button except new game if winner wins
+     *  @return true if game won. Triggers message
      */
     private boolean gameWon() {
         boolean result = false;
         int correctAnswers = 0;
 
         for(int i = 0; i < buttonCount; i++){
-            if(board[i].beenChecked()){
+            if(board[i].getMarkedCorrect()){
                 correctAnswers++;
             }
         }
 
         if(correctAnswers == buttonCount){
+            Button checkButton = findViewById(R.id.CheckAnswerButton);
+            checkButton.setEnabled(false);
+            Button tryButton = findViewById(R.id.TryAgainButton);
+            tryButton.setEnabled(false);
+            Button endGame = findViewById(R.id.endButton);
+            endGame.setEnabled(false);
             return true;
         }
 
@@ -219,7 +239,7 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
 
     private void filpIncorrectCards(){
         for(int i = 0; i < buttonCount; i++){
-            if(!board[i].beenChecked()){
+            if(!board[i].getMarkedCorrect()){
                 board[i].flip();
             }
         }
@@ -269,8 +289,9 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
 
         for(int x = 0; x < buttonCount; x++) {
             if (board[x].getClicked() && target.getWord().equals(board[x].getWord()) && target.getId() != board[x].getId()) {
-                target.setBeenChecked();
-                board[x].setBeenChecked();
+                target.setMarkedCorrect();
+                board[x].setMarkedCorrect();
+                board[x].setPreviouslyChecked();
                 return true;
             }
         }//end for

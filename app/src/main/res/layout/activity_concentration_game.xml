@@ -33,7 +33,6 @@
         android:textAllCaps="true"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/NewGameButton"
