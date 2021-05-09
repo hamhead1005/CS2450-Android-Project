@@ -3,6 +3,7 @@ package com.example.cs2450androidapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -157,6 +158,15 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
                 if(gameWon()){
                     Toast toast = Toast.makeText(ConcentrationGame.this, "You Won!", Toast.LENGTH_SHORT);
                     toast.show();
+
+                    SharedPreferences preferences = getSharedPreferences("PREFS", 0);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("lastScore", (int) score);
+                    editor.apply();
+
+                    Intent intent = new Intent(getApplicationContext(), HighScore.class);
+                    startActivity(intent);
+                    finish();
                 }//end Game Won
             }
         });
@@ -305,6 +315,8 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
     public static void addClick(){
         buttonsClicked++;
     }//end addClick()
+
+
 
 
     /**
