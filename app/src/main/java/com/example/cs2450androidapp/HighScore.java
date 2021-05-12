@@ -1,5 +1,6 @@
 package com.example.cs2450androidapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,9 +12,14 @@ public class HighScore extends AppCompatActivity {
 
     TextView highScore;
 
-    int lastScore;
+    static int lastScore;
     int best1,best2,best3;
 
+    public static int getLastScore() {
+        return lastScore;
+    }
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);

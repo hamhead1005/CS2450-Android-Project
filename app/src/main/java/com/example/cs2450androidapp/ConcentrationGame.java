@@ -15,8 +15,10 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class ConcentrationGame<TotalScore> extends AppCompatActivity {
+public class ConcentrationGame extends AppCompatActivity {
     private static int buttonsClicked = 0;
     private int buttonCount = 0;
     GridLayout simpleGrid;
@@ -315,9 +317,6 @@ public class ConcentrationGame<TotalScore> extends AppCompatActivity {
     public static void addClick(){
         buttonsClicked++;
     }//end addClick()
-
-
-
 
     /**
      * Getter for static click counter
