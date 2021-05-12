@@ -28,9 +28,10 @@
         android:text="@string/StartGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/musicSwitchMenu"
-        app:layout_constraintVertical_bias="0.929" />
+        app:layout_constraintVertical_bias="0.808" />
 
     <Spinner
         android:id="@+id/spinner"
@@ -51,15 +52,31 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif"
         android:text="@string/GameSizeSelection"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
         android:typeface="serif"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.646" />
+
+    <Button
+        android:id="@+id/creditsButton"
+        android:layout_width="172dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginLeft="122dp"
+        android:layout_marginTop="607dp"
+        android:layout_marginEnd="123dp"
+        android:layout_marginRight="123dp"
+        android:layout_marginBottom="73dp"
+        android:text="Credits"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

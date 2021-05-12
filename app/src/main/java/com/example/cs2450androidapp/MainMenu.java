@@ -79,5 +79,15 @@ public class MainMenu extends AppCompatActivity {
                 }
             }
         });
+
+        //For Credits Button
+        Button creditsButton = (Button) findViewById(R.id.creditsButton);
+        creditsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainMenu.this, Credits.class);
+                startActivity(i);
+            }
+        });
     }
     }
