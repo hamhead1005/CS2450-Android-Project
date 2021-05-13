@@ -16,16 +16,15 @@ import android.widget.Spinner;
 public class MainMenu extends AppCompatActivity {
     private String gameSize;
     private boolean audioSwitch = false; //T = checked
+    boolean fromMain = false;
 
     //Used for passing music switch status from Concentration Game
     @Override
-    public void onActivityResult(int requestCode,int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1)
-        {
-            if(resultCode == RESULT_OK)
-            {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
                 SwitchCompat switchCompat = findViewById(R.id.musicSwitchMenu);
                 boolean switchStatus = data.getBooleanExtra("AUDIO_SWITCH_C", true);
                 switchCompat.setChecked(switchStatus);
@@ -44,7 +43,7 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         //For DropDown Menu
-        String [] options = {"4","6","8","10","12","14","16","18","20"};
+        String[] options = {"4", "6", "8", "10", "12", "14", "16", "18", "20"};
         Spinner dropdown = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, options);
         dropdown.setAdapter(adapter);
@@ -60,7 +59,7 @@ public class MainMenu extends AppCompatActivity {
                 Intent i = new Intent(MainMenu.this, ConcentrationGame.class);
                 i.putExtra("GAME_SIZE", gameSize);
                 i.putExtra("AUDIO_SWITCH", audioSwitch);
-                startActivityForResult(i,1);
+                startActivityForResult(i, 1);
             }
         });
 
@@ -68,12 +67,10 @@ public class MainMenu extends AppCompatActivity {
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (switchCompat.isChecked())
-                {
+                if (switchCompat.isChecked()) {
                     audioSwitch = true;
                     MainActivity.pausePlayer();
-                }
-                else if(!switchCompat.isChecked()){
+                } else if (!switchCompat.isChecked()) {
                     audioSwitch = false;
                     MainActivity.continuePlayer();
                 }
@@ -89,5 +86,21 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+
+        //For HighScores Button
+        Button highScores = (Button) findViewById(R.id.highscoreButton);
+        highScores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fromMain = true;
+                Intent i = new Intent(getApplicationContext(), HighScore.class);
+                i.putExtra("fromMain",fromMain);
+                startActivity(i);
+            }
+        });
+
     }
-    }
+
+}
+
