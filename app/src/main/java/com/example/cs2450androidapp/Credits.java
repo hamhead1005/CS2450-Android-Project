@@ -17,15 +17,12 @@ public class Credits extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credits);
 
-      //  relativeLayout.setBackgroundResource(R.drawable.menubackground);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Credits.this, MainMenu.class);
-                startActivity(i);
                 finish();
             }
         });

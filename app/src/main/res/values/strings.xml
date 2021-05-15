@@ -11,4 +11,6 @@
     <string name="StartGame">Start New Game</string>
     <string name="GameSizeSelection">Select the number of Cards you would like?</string>
     <string name="CheckAnswer">Check Answers</string>
+    <string name="credits">Credits</string>
+    <string name="Abrahan_Pedroza">Abrahan Pedroza, #011257480</string>
 </resources>

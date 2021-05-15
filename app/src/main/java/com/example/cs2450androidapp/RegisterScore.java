@@ -30,9 +30,6 @@ private EditText nameText;
             @Override
             public void onClick(View v) {
                 int highScore = HighScore.getLastScore();
-
-
-
             }
         });
 

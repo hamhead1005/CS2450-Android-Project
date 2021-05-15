@@ -125,8 +125,4 @@ public class HighScore extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
-
-
 }

@@ -5,12 +5,15 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Concentration Game"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CS2450AndroidApp" >
-        <activity android:name=".Credits" >
-        </activity>
+        <activity
+            android:name=".Credits"
+            android:parentActivityName=".MainMenu"
+            />
+
         <activity android:name=".MainMenu" />
         <activity
             android:name=".ConcentrationGame"
