@@ -1,13 +1,17 @@
 package com.example.cs2450androidapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,8 +19,6 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ConcentrationGame extends AppCompatActivity {
     private static int buttonsClicked = 0;
@@ -157,18 +159,38 @@ public class ConcentrationGame extends AppCompatActivity {
                     buttonsClicked = 3; //Click try again to start clicking
                 }// end Subtract Points
 
+                //If player wins pop-up Dialog to enter name.
                 if(gameWon()){
                     Toast toast = Toast.makeText(ConcentrationGame.this, "You Won!", Toast.LENGTH_SHORT);
                     toast.show();
 
-                    SharedPreferences preferences = getSharedPreferences("PREFS", 0);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putInt("lastScore", (int) score);
-                    editor.apply();
+                    //Input Pop-up
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ConcentrationGame.this);
+                    builder.setTitle("Save HighScore");
+                    builder.setIcon(R.drawable.ic_launcher_background);
+                    builder.setMessage("Enter your Name: ");
 
-                    Intent intent = new Intent(getApplicationContext(), HighScore.class);
-                    startActivity(intent);
-                    finish();
+                    EditText input = new EditText(ConcentrationGame.this);
+                    builder.setView(input);
+
+
+                    //Save
+                    builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String name = input.getText().toString();
+                            saveHighScore(name);
+                            //Toast.makeText(getApplicationContext(),txt, Toast.LENGTH_LONG).show();
+                        }
+                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog ad = builder.create();
+                    ad.show();
                 }//end Game Won
             }
         });
@@ -238,6 +260,27 @@ public class ConcentrationGame extends AppCompatActivity {
 
         return result;
     }//end gameWon
+
+    /**
+     * Saves highscore into PREFS.xml file
+     *
+     * HighScore includes score, cards in game and name.
+     */
+    private void saveHighScore(String enteredName){
+        String name = ""; //Name for the new HighScore
+
+        SharedPreferences preferences = getSharedPreferences("PREFS", 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt("lastScore", (int) score);
+        editor.putString("enteredName", enteredName);
+        editor.putInt("lastButton", buttonCount);
+        editor.apply();
+
+        Intent intent = new Intent(getApplicationContext(), HighScoreDisplayScreen.class);
+        HighScoreDisplayScreen.setNewScore();
+        startActivity(intent);
+        finish();
+    }
 
     /**
      * Used to show the answers and disable clicking

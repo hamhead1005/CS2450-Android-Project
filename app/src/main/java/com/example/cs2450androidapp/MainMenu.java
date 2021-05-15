@@ -2,12 +2,10 @@ package com.example.cs2450androidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -94,7 +92,7 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 fromMain = true;
-                Intent i = new Intent(getApplicationContext(), HighScore.class);
+                Intent i = new Intent(getApplicationContext(), HighScoreDisplayScreen.class);
                 i.putExtra("fromMain",fromMain);
                 startActivity(i);
             }
